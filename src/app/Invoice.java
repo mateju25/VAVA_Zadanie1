@@ -34,6 +34,18 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
         public String getInfo() {
             return goodsItem.getInfo() + String.format("Počet: %-10s", String.valueOf(this.count));
         }
+
+        public String getName() {
+            return goodsItem.getName();
+        }
+
+        public String getDescription() {
+            return goodsItem.getDescription();
+        }
+
+        public int getValue() {
+            return goodsItem.getValue();
+        }
     }
 
     public Invoice() {

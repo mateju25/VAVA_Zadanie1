@@ -5,16 +5,15 @@ import app.Goods;
 import app.InvoiceSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class LoadGoodsController extends SampleController {
     @FXML
-    public ListView listOfGoods;
+    public TableView listOfGoods;
+
     @FXML
     public Button cancelButton;
     @FXML
@@ -29,12 +28,41 @@ public class LoadGoodsController extends SampleController {
     public Button save1;
     @FXML
     public Label warning;
+    @FXML
+    public TableColumn tableName;
+    @FXML
+    public TableColumn tableDescription;
+    @FXML
+    public TableColumn tableValue;
 
     private Goods chosedGood = null;
 
     @FXML
     public void initialize() {
-        super.initialize(listOfGoods);
+        //super.initialize(listOfGoods);
+        TableColumn<Goods, String> column1 = new TableColumn<>("Názov");
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Goods, String> column2 = new TableColumn<>("Popis");
+        column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        TableColumn<Goods, Integer> column3 = new TableColumn<>("Cena");
+        column3.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+
+        listOfGoods.getColumns().add(column1);
+        listOfGoods.getColumns().add(column2);
+        listOfGoods.getColumns().add(column3);
+
+        column1.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.3));
+        column2.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.5));
+        column3.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.2));
+
+        column1.setResizable(false);
+        column2.setResizable(false);
+        column3.setResizable(false);
+
+
         warning.setTextFill(Color.color(1, 0, 0));
     }
 
