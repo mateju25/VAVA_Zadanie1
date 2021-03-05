@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="798.0" style="-fx-background-color: #99D9EA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.LoadCustomerController">
+   <children>
+      <ListView fx:id="listOfCustomers" layoutX="74.0" layoutY="58.0" prefHeight="435.0" prefWidth="641.0" />
+      <Button fx:id="cancelButton" layoutX="645.0" layoutY="503.0" minWidth="50.0" mnemonicParsing="false" onAction="#cancel" prefHeight="32.0" prefWidth="70.0" text="Zruš" />
+      <Button fx:id="save" layoutX="566.0" layoutY="503.0" minWidth="50.0" mnemonicParsing="false" onAction="#load_customer" prefHeight="32.0" prefWidth="70.0" text="Použi" />
+   </children>
+</AnchorPane>

@@ -1,31 +1,29 @@
 package app;
 
-public class Goods {
+public class Goods implements Cloneable, ViewInListView {
     private String name = "";
     private String description = "";
     private int value = 0;
 
+    public Goods(String name, String description, int value) {
+        this.name = name;
+        this.description = description;
+        this.value = value;
+    }
+
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();
+    }
+
+    public String getInfo() {
+        return String.format("%-20s, %-60s, %-10s", this.name, this.description, String.valueOf(this.value));
     }
 }
