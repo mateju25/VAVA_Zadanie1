@@ -1,6 +1,6 @@
 package app;
 
-public class Goods implements Cloneable, ViewInListView {
+public class Goods extends ViewInList implements Cloneable {
     private String name = "";
     private String description = "";
     private int value = 0;

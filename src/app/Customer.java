@@ -1,6 +1,6 @@
 package app;
 
-public class Customer implements ViewInListView{
+public class Customer extends ViewInList implements SaveAsItem{
     private String name = null;
     private String address = null;
     private String number = null;
@@ -33,9 +33,5 @@ public class Customer implements ViewInListView{
 
     public String getName() {
         return name;
-    }
-
-    public String getInfo() {
-        return String.format("%-30s, %-40s, %-40s", this.name, this.address + " " + this.number, this.town + " " + this.postal_code);
     }
 }

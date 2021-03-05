@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Invoice implements Cloneable, ViewInListView {
+public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
     private Date created;
     private Customer customer = null;
     private List<GoodsAndCount> listOfGoods = new ArrayList<GoodsAndCount>();
     private int totalValue = 0;
 
-    public class GoodsAndCount implements ViewInListView{
+    public class GoodsAndCount extends ViewInList {
         private Goods goodsItem = null;
         private int count = 1;
 
@@ -83,14 +83,6 @@ public class Invoice implements Cloneable, ViewInListView {
         }
         totalValue = res;
         return totalValue;
-    }
-
-    public String getInfo() {
-        String temp = "| ";
-        for (GoodsAndCount good: listOfGoods) {
-            temp += good.getInfo() + "|";
-        }
-        return customer.getInfo() + temp;
     }
 
     public Object clone()throws CloneNotSupportedException{

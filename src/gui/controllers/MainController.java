@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -58,6 +59,14 @@ public class MainController extends SampleController {
             if (name.getText().length() != 0 && address.getText().length() != 0 && town.getText().length() != 0 && postal_code.getText().length() != 0 && number.getText().length() != 0) {
                 warning.setText("");
                 Customer newCustomer = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
+
+                String saveAsName = saveAs("Zadaj meno pre uloženie zákazníka:");
+                if (saveAsName != null) {
+                    newCustomer.setInfo(saveAsName);
+                } else {
+                    newCustomer.setInfo(newCustomer.getName());
+                }
+
                 localSys.getListOfCustomers().add(newCustomer);
                 localSys.getCurrInvoice().setCustomer(newCustomer);
             } else {
@@ -74,19 +83,20 @@ public class MainController extends SampleController {
     @FXML
     private void load_customer(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/loadSavedCustomers.fxml"));
+        loader.setLocation(getClass().getResource("../resources/loadSaveAsItems.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
 
-        LoadCustomerController controller = loader.getController();
-        controller.loadCustomerController(localSys);
+        LoadSaveAsItemsController controller = loader.getController();
+        controller.loadCustomerController(localSys, Customer.class);
 
         Stage window = new Stage();
+        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 
-        Customer currCust = controller.getChosedCustomer();
+        Customer currCust = (Customer) controller.getChosedItem();
         if (currCust != null) {
             name.setText(currCust.getName());
             address.setText(currCust.getAddress());
@@ -109,6 +119,7 @@ public class MainController extends SampleController {
         controller.loadCustomerController(localSys);
 
         Stage window = new Stage();
+        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 
@@ -124,19 +135,20 @@ public class MainController extends SampleController {
     @FXML
     public void saveInvoice(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/loadSavedInvoices.fxml"));
+        loader.setLocation(getClass().getResource("../resources/loadSaveAsItems.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
 
-        LoadInvoiceController controller = loader.getController();
-        controller.loadCustomerController(localSys);
+        LoadSaveAsItemsController controller = loader.getController();
+        controller.loadCustomerController(localSys, Invoice.class);
 
         Stage window = new Stage();
+        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 
-        Invoice currInvoice = controller.getChosedInvoice();
+        Invoice currInvoice = (Invoice) controller.getChosedItem();
         if (currInvoice != null) {
             try {
                 currInvoice = (Invoice) currInvoice.clone();
@@ -176,6 +188,14 @@ public class MainController extends SampleController {
                 warning.setText("");
                 Customer newCustomer = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
                 localSys.getCurrInvoice().setCustomer(newCustomer);
+
+                String saveAsName = saveAs("Zadaj meno pre uloženie faktúry:");
+                if (saveAsName != null) {
+                    localSys.getCurrInvoice().setInfo(saveAsName);
+                } else {
+                    localSys.getCurrInvoice().setInfo(localSys.getCurrInvoice().getCustomer().getName());
+                }
+
                 localSys.getListOfInvoice().add(localSys.getCurrInvoice());
             } else {
                 warning.setText("Vyplň všetky polia!");
