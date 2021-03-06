@@ -1,6 +1,6 @@
 package app;
 
-public class Customer extends ViewInList implements SaveAsItem{
+public class Customer {
     private String name = null;
     private String address = null;
     private String number = null;
@@ -33,5 +33,25 @@ public class Customer extends ViewInList implements SaveAsItem{
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public void setPostal_code(String postal_code) {
+        this.postal_code = postal_code;
     }
 }

@@ -15,11 +15,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         Parent root = null;
-        if (getClass().getResource("resources/sample.fxml") == null) {
-            root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        } else
-            root = FXMLLoader.load(getClass().getResource("resources/sample.fxml"));
+        root = FXMLLoader.load(getClass().getResource("resources/sample.fxml"));
         stage.setTitle("Fakturačný systém");
+        stage.setMaxWidth(616);
+        stage.setMaxHeight(839);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/Ikona.png")));
         stage.setScene(new Scene(root, 600, 800));
         stage.show();

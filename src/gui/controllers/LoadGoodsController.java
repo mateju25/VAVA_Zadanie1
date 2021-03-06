@@ -1,93 +1,85 @@
 package gui.controllers;
 
-import app.Customer;
 import app.Goods;
-import app.InvoiceSystem;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+
 
 public class LoadGoodsController extends SampleController {
     @FXML
-    public TableView listOfGoods;
+    private TableView<Goods> tableOfGoods;
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField text;
+    @FXML
+    private TextField value;
+    @FXML
+    private Label warning;
+    @FXML
+    private TableColumn<Goods, String> columnName;
+    @FXML
+    private TableColumn<Goods, String> columnDescription;
+    @FXML
+    private TableColumn<Goods, Double> columnValue;
 
-    @FXML
-    public Button cancelButton;
-    @FXML
-    public Button save;
-    @FXML
-    public TextField name;
-    @FXML
-    public TextField text;
-    @FXML
-    public TextField value;
-    @FXML
-    public Button save1;
-    @FXML
-    public Label warning;
-    @FXML
-    public TableColumn tableName;
-    @FXML
-    public TableColumn tableDescription;
-    @FXML
-    public TableColumn tableValue;
-
-    private Goods chosedGood = null;
+    private Goods chosedItem = null;
 
     @FXML
     public void initialize() {
-        //super.initialize(listOfGoods);
-        TableColumn<Goods, String> column1 = new TableColumn<>("Názov");
-        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        columnValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 
-        TableColumn<Goods, String> column2 = new TableColumn<>("Popis");
-        column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+        columnName.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnValue.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
+            @Override
+            public String toString(Double object) {
+                return String.valueOf(object);
+            }
 
-        TableColumn<Goods, Integer> column3 = new TableColumn<>("Cena");
-        column3.setCellValueFactory(new PropertyValueFactory<>("value"));
-
-
-        listOfGoods.getColumns().add(column1);
-        listOfGoods.getColumns().add(column2);
-        listOfGoods.getColumns().add(column3);
-
-        column1.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.3));
-        column2.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.5));
-        column3.prefWidthProperty().bind(listOfGoods.widthProperty().multiply(0.2));
-
-        column1.setResizable(false);
-        column2.setResizable(false);
-        column3.setResizable(false);
-
+            @Override
+            public Double fromString(String string) {
+                return Double.parseDouble(string);
+            }
+        }));
 
         warning.setTextFill(Color.color(1, 0, 0));
+        tableOfGoods.getItems().clear();
+        tableOfGoods.getItems().addAll(getGoods());
     }
 
     @FXML
     public void cancel(ActionEvent actionEvent) {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void load_Good(ActionEvent actionEvent) {
-        chosedGood = (Goods) listOfGoods.getSelectionModel().getSelectedItem();
-        Stage stage = (Stage) listOfGoods.getScene().getWindow();
+    public void useItem(ActionEvent actionEvent) {
+        chosedItem = tableOfGoods.getSelectionModel().getSelectedItem();
+        Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void add(ActionEvent actionEvent) {
+    public void addItem(ActionEvent actionEvent) {
         try {
-            int val = Integer.parseInt(value.getText());
+            double val = Double.parseDouble(value.getText());
             if (name.getText().length() != 0 && text.getText().length() != 0 && value.getText().length()  != 0) {
                 Goods temp = new Goods(name.getText(), text.getText(), val);
                 localSys.getListOfGoods().add(temp);
-                listOfGoods.getItems().clear();
-                listOfGoods.getItems().addAll(localSys.getListOfGoods());
+                tableOfGoods.getItems().clear();
+                tableOfGoods.getItems().addAll(getGoods());
             } else {
                 warning.setText("Vyplň všetky polia!");
             }
@@ -97,13 +89,31 @@ public class LoadGoodsController extends SampleController {
 
     }
 
-    public Goods getChosedGood() {
-        return chosedGood;
+    @FXML
+    public void columnEditName(TableColumn.CellEditEvent<Goods, String> cellEditEvent) {
+        Goods editGood = tableOfGoods.getSelectionModel().getSelectedItem();
+        editGood.setName(cellEditEvent.getNewValue());
     }
 
-    public void loadCustomerController(InvoiceSystem sys) {
-        localSys = sys;
-        listOfGoods.getItems().clear();
-        listOfGoods.getItems().addAll(localSys.getListOfGoods());
+    @FXML
+    public void columnEditDescription(TableColumn.CellEditEvent<Goods, String> cellEditEvent) {
+        Goods editGood = tableOfGoods.getSelectionModel().getSelectedItem();
+        editGood.setDescription(cellEditEvent.getNewValue());
+    }
+
+    @FXML
+    public void columnEditValue(TableColumn.CellEditEvent<Goods, Double> cellEditEvent) {
+        Goods editGood = tableOfGoods.getSelectionModel().getSelectedItem();
+        editGood.setValue(cellEditEvent.getNewValue());
+    }
+
+    public Goods getItem() {
+        return chosedItem;
+    }
+
+    private ObservableList<Goods> getGoods() {
+        ObservableList<Goods> items = FXCollections.observableArrayList();
+        items.addAll(localSys.getListOfGoods());
+        return items;
     }
 }

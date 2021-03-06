@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
+public class Invoice extends ViewInList {
     private Date created;
     private Customer customer = null;
     private List<GoodsAndCount> listOfGoods = new ArrayList<GoodsAndCount>();
-    private int totalValue = 0;
+    private double totalValue = 0;
 
-    public class GoodsAndCount extends ViewInList {
+    public static class GoodsAndCount {
         private Goods goodsItem = null;
         private int count = 1;
 
-        public GoodsAndCount(Goods item) {
+        public GoodsAndCount(Goods item, int count) {
             this.goodsItem = item;
-            this.count = 1;
+            this.count = count;
         }
 
         public Goods getGoodsItem() {
@@ -31,10 +31,6 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
             this.count = count;
         }
 
-        public String getInfo() {
-            return goodsItem.getInfo() + String.format("Počet: %-10s", String.valueOf(this.count));
-        }
-
         public String getName() {
             return goodsItem.getName();
         }
@@ -43,13 +39,17 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
             return goodsItem.getDescription();
         }
 
-        public int getValue() {
+        public double getValue() {
             return goodsItem.getValue();
         }
     }
 
     public Invoice() {
         this.created = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
     }
 
     public Customer getCustomer() {
@@ -64,19 +64,20 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
         return listOfGoods;
     }
 
+    public void setListOfGoods(List<GoodsAndCount> newList) {
+        this.listOfGoods = newList;
+    }
+
     public void addGood(Goods newGood) {
-        try {
-            newGood = (Goods) newGood.clone();
-        } catch (Exception e ){
-            e.printStackTrace();
-        }
         for (GoodsAndCount good: listOfGoods) {
-            if ( good.getGoodsItem().getName() == newGood.getName()) {
+            if (good.getGoodsItem().getName().equals(newGood.getName())
+                    && good.getGoodsItem().getDescription().equals(newGood.getDescription())
+                    && String.valueOf(good.getGoodsItem().getValue()).equals(String.valueOf(newGood.getValue()))) {
                 good.setCount(good.getCount()+1);
                 return;
             }
         }
-        listOfGoods.add(new GoodsAndCount(newGood));
+        listOfGoods.add(new GoodsAndCount(newGood, 1));
     }
 
     public void deleteGood(GoodsAndCount newGood) {
@@ -88,8 +89,8 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
         }
     }
 
-    public int getTotalValue() {
-        int res = 0;
+    public double getTotalValue() {
+        double res = 0;
         for (GoodsAndCount good: listOfGoods) {
             res += good.getCount() * good.getGoodsItem().getValue();
         }
@@ -97,7 +98,13 @@ public class Invoice extends ViewInList implements Cloneable, SaveAsItem {
         return totalValue;
     }
 
-    public Object clone()throws CloneNotSupportedException{
-        return super.clone();
+    public ArrayList<Invoice.GoodsAndCount> duplicateGoods() {
+        ArrayList<Invoice.GoodsAndCount> newList = new ArrayList<>();
+        for (Invoice.GoodsAndCount item: this.listOfGoods) {
+            Goods newGood = new Goods(item.getName(), item.getDescription(), item.getValue());
+            Invoice.GoodsAndCount newGoodAndCount = new Invoice.GoodsAndCount(newGood, item.getCount());
+            newList.add(newGoodAndCount);
+        }
+        return newList;
     }
 }
