@@ -1,4 +1,4 @@
-package app;
+package zadanie1.app;
 
 public class Customer {
     private String name = null;

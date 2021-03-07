@@ -1,4 +1,4 @@
-package app;
+package zadanie1.app;
 
 public class Goods implements Cloneable {
     private String name = "";

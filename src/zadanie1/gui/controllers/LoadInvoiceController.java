@@ -1,7 +1,7 @@
-package gui.controllers;
+package zadanie1.gui.controllers;
 
-import app.Invoice;
-import app.ViewInList;
+import zadanie1.app.Invoice;
+import zadanie1.app.ViewInList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;

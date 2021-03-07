@@ -1,11 +1,10 @@
-package gui.controllers;
+package zadanie1.gui.controllers;
 
-import app.Customer;
+import zadanie1.app.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;

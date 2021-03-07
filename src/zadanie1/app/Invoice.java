@@ -1,4 +1,4 @@
-package app;
+package zadanie1.app;
 
 import java.util.ArrayList;
 import java.util.Date;

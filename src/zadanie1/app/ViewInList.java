@@ -1,4 +1,4 @@
-package app;
+package zadanie1.app;
 
 public abstract class ViewInList {
     private String info;

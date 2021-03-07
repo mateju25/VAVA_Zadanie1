@@ -1,9 +1,9 @@
-package gui.controllers;
+package zadanie1.gui.controllers;
 
-import app.Customer;
-import app.Goods;
-import app.Invoice;
-import app.InvoiceSystem;
+import zadanie1.app.Customer;
+import zadanie1.app.Goods;
+import zadanie1.app.Invoice;
+import zadanie1.app.InvoiceSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -80,7 +80,7 @@ public class MainController extends SampleController {
     @FXML
     private void loadCustomer(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/loadSavedCustomers.fxml"));
+        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedCustomers.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -89,7 +89,7 @@ public class MainController extends SampleController {
 
         Stage window = new Stage();
         window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 
@@ -106,7 +106,7 @@ public class MainController extends SampleController {
     @FXML
     public void addGood(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/loadSavedGoods.fxml"));
+        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedGoods.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -115,7 +115,7 @@ public class MainController extends SampleController {
 
         Stage window = new Stage();
         window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 
@@ -140,7 +140,7 @@ public class MainController extends SampleController {
     @FXML
     public void loadInvoice(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/loadSavedInvoices.fxml"));
+        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedInvoices.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -149,7 +149,7 @@ public class MainController extends SampleController {
 
         Stage window = new Stage();
         window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("../resources/Ikona.png")));
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
         window.setScene(scene);
         window.showAndWait();
 

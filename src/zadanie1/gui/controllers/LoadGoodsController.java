@@ -1,6 +1,6 @@
-package gui.controllers;
+package zadanie1.gui.controllers;
 
-import app.Goods;
+import zadanie1.app.Goods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

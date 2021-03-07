@@ -1,6 +1,6 @@
-package gui.controllers;
+package zadanie1.gui.controllers;
 
-import app.*;
+import zadanie1.app.InvoiceSystem;
 import javafx.scene.control.TextInputDialog;
 
 import java.util.Optional;
