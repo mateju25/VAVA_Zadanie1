@@ -1,11 +1,12 @@
 package zadanie1.app;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Invoice extends ViewInList {
-    private Date created;
+    private LocalDateTime created;
     private Customer customer = null;
     private List<GoodsAndCount> listOfGoods = new ArrayList<GoodsAndCount>();
     private double totalValue = 0;
@@ -44,12 +45,12 @@ public class Invoice extends ViewInList {
         }
     }
 
-    public Invoice() {
-        this.created = new Date();
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public Date getCreated() {
-        return created;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     public Customer getCustomer() {

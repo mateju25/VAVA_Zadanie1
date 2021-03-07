@@ -37,7 +37,7 @@
             <TextField fx:id="postal_code" layoutX="431.0" layoutY="226.0" prefHeight="26.0" prefWidth="102.0" promptText="PSČ ..." />
             <Button layoutX="311.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#saveCustomer" prefHeight="32.0" prefWidth="108.0" text="Ulož zákazníka" />
             <Button layoutX="428.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#loadCustomer" prefHeight="32.0" prefWidth="108.0" text="Načítaj zákazníka" />
-            <Label fx:id="warning" layoutX="282.0" layoutY="306.0" prefHeight="18.0" prefWidth="223.0" />
+            <Label fx:id="warning" layoutX="376.0" layoutY="306.0" prefHeight="18.0" prefWidth="160.0" />
             <Label layoutX="62.0" layoutY="324.0" text="Tovary">
                <font>
                   <Font name="Constantia" size="15.0" />

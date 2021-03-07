@@ -17,7 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainController extends SampleController {
     @FXML
@@ -51,7 +55,7 @@ public class MainController extends SampleController {
     private void initialize() {
         localSys = new InvoiceSystem();
         warning.setTextFill(Color.color(1, 0, 0));
-        createdLabel.setText(String.valueOf(localSys.getCurrInvoice().getCreated()));
+        createdLabel.setText("");
         totalCount.setText(String.valueOf(0));
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -168,7 +172,8 @@ public class MainController extends SampleController {
             listOfGoods.getItems().clear();
             listOfGoods.getItems().addAll(getGoods());
             totalCount.setText(String.valueOf(currInvoice.getTotalValue()));
-            createdLabel.setText(String.valueOf(currInvoice.getCreated()));
+            DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            createdLabel.setText(currInvoice.getCreated().format(formatObj));
         }
     }
 
@@ -188,7 +193,7 @@ public class MainController extends SampleController {
             } else {
                 localSys.getCurrInvoice().setInfo(localSys.getCurrInvoice().getCustomer().getName());
             }
-
+            localSys.getCurrInvoice().setCreated(LocalDateTime.now());
             localSys.getListOfInvoice().add(localSys.getCurrInvoice());
 
             localSys.setNewInvoice();
