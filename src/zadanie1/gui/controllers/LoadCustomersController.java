@@ -3,7 +3,6 @@ package zadanie1.gui.controllers;
 import zadanie1.app.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,14 +44,14 @@ public class LoadCustomersController extends LoadController{
     }
 
     @FXML
-    public void useItem(ActionEvent actionEvent) {
+    public void useItem() {
         chosedItem = tableOfGoods.getSelectionModel().getSelectedItem();
         Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
@@ -63,7 +62,7 @@ public class LoadCustomersController extends LoadController{
         edit.setName(cellEditEvent.getNewValue());
     }
     @FXML
-    public void columnEditAdress(TableColumn.CellEditEvent<Customer, String> cellEditEvent) {
+    public void columnEditAddress(TableColumn.CellEditEvent<Customer, String> cellEditEvent) {
         Customer edit = tableOfGoods.getSelectionModel().getSelectedItem();
         edit.setAddress(cellEditEvent.getNewValue());
     }

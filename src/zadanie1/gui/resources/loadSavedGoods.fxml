@@ -8,35 +8,40 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="798.0" style="-fx-background-color: #99D9EA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zadanie1.gui.controllers.LoadGoodsController">
-    <children>
-        <Button layoutX="645.0" layoutY="535.0" minWidth="50.0" mnemonicParsing="false" onAction="#cancel" prefHeight="32.0" prefWidth="70.0" text="Zruš" />
-        <Button layoutX="562.0" layoutY="535.0" minWidth="50.0" mnemonicParsing="false" onAction="#useItem" prefHeight="32.0" prefWidth="70.0" text="Použi" />
-      <TextField fx:id="name" layoutX="74.0" layoutY="80.0" prefHeight="26.0" prefWidth="160.0" />
-      <TextField fx:id="text" layoutX="243.0" layoutY="80.0" prefHeight="26.0" prefWidth="354.0" />
-      <TextField fx:id="value" layoutX="607.0" layoutY="80.0" prefHeight="26.0" prefWidth="77.0" />
-      <Button layoutX="690.0" layoutY="80.0" maxWidth="-Infinity" minHeight="18.0" minWidth="25.0" mnemonicParsing="false" onAction="#addItem" prefHeight="26.0" prefWidth="25.0" text="+" />
-      <Label layoutX="74.0" layoutY="62.0" text="Názov">
-         <font>
-            <Font name="Constantia" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="243.0" layoutY="62.0" text="Popis">
-         <font>
-            <Font name="Constantia" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="607.0" layoutY="62.0" text="Cena v € ">
-         <font>
-            <Font name="Constantia" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="warning" layoutX="484.0" layoutY="107.0" prefHeight="18.0" prefWidth="231.0" textFill="RED" />
-      <TableView fx:id="tableOfGoods" editable="true" layoutX="74.0" layoutY="123.0" prefHeight="383.0" prefWidth="641.0">
-         <columns>
-            <TableColumn fx:id="columnName" onEditCommit="#columnEditName" prefWidth="182.0" text="Názov" />
-            <TableColumn fx:id="columnDescription" onEditCommit="#columnEditDescription" prefWidth="379.0" text="Popis" />
-            <TableColumn fx:id="columnValue" onEditCommit="#columnEditValue" prefWidth="79.0" text="Cena v € " />
-         </columns></TableView>
-    </children>
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="798.0" style="-fx-background-color: #99D9EA;"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="zadanie1.gui.controllers.LoadGoodsController">
+    <Button layoutX="645.0" layoutY="535.0" minWidth="50.0" mnemonicParsing="false" onAction="#cancel" prefHeight="32.0"
+            prefWidth="70.0" text="Zruš"/>
+    <Button layoutX="562.0" layoutY="535.0" minWidth="50.0" mnemonicParsing="false" onAction="#useItem"
+            prefHeight="32.0" prefWidth="70.0" text="Použi"/>
+    <TextField fx:id="name" layoutX="74.0" layoutY="80.0" prefHeight="26.0" prefWidth="160.0"/>
+    <TextField fx:id="text" layoutX="243.0" layoutY="80.0" prefHeight="26.0" prefWidth="354.0"/>
+    <TextField fx:id="value" layoutX="607.0" layoutY="80.0" prefHeight="26.0" prefWidth="77.0"/>
+    <Button layoutX="690.0" layoutY="80.0" maxWidth="-Infinity" minHeight="18.0" minWidth="25.0" mnemonicParsing="false"
+            onAction="#addItem" prefHeight="26.0" prefWidth="25.0" text="+"/>
+    <Label layoutX="74.0" layoutY="62.0" text="Názov">
+        <font>
+          <Font name="Constantia" size="15.0"/>
+        </font>
+    </Label>
+    <Label layoutX="243.0" layoutY="62.0" text="Popis">
+        <font>
+          <Font name="Constantia" size="15.0"/>
+        </font>
+    </Label>
+    <Label layoutX="607.0" layoutY="62.0" text="Cena v € ">
+        <font>
+          <Font name="Constantia" size="15.0"/>
+        </font>
+    </Label>
+    <Label fx:id="warning" layoutX="484.0" layoutY="107.0" prefHeight="18.0" prefWidth="231.0" textFill="RED"/>
+    <TableView fx:id="tableOfGoods" editable="true" layoutX="74.0" layoutY="123.0" prefHeight="383.0" prefWidth="641.0">
+        <columns>
+          <TableColumn fx:id="columnName" onEditCommit="#columnEditName" prefWidth="182.0" text="Názov"/>
+          <TableColumn fx:id="columnDescription" onEditCommit="#columnEditDescription" prefWidth="379.0"
+                       text="Popis"/>
+          <TableColumn fx:id="columnValue" onEditCommit="#columnEditValue" prefWidth="79.0" text="Cena v € "/>
+        </columns>
+    </TableView>
 </AnchorPane>

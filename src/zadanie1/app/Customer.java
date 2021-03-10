@@ -7,7 +7,6 @@ public class Customer implements ItemForChoice{
     private String town;
     private String postal_code;
 
-    //region Constructors
     public Customer(String name, String address, String number, String town, String postal_code) {
         this.name = name;
         this.address = address;
@@ -15,15 +14,6 @@ public class Customer implements ItemForChoice{
         this.town = town;
         this.postal_code = postal_code;
     }
-
-    public Customer() {
-        this.name = null;
-        this.address = null;
-        this.number = null;
-        this.town = null;
-        this.postal_code = null;
-    }
-    //endregion
 
     //region Getters and Setters
     public String getAddress() {

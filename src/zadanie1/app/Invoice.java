@@ -6,10 +6,10 @@ import java.util.List;
 public class Invoice extends ViewInList implements ItemForChoice {
     private String created;
     private Customer customer;
-    private List<GoodsAndCount> listOfGoods = new ArrayList<GoodsAndCount>();
+    private List<GoodsAndCount> listOfGoods = new ArrayList<>();
 
     public static class GoodsAndCount extends Goods {
-        private int count = 1;
+        private int count;
 
         public GoodsAndCount(String name, String description, double value, int count) {
             super(name, description, value);

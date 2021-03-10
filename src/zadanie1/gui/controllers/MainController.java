@@ -1,6 +1,5 @@
 package zadanie1.gui.controllers;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.Modality;
 import zadanie1.app.Customer;
 import zadanie1.app.Goods;
@@ -16,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,7 +68,7 @@ public class MainController {
     }
 
     @FXML
-    public void addGood(ActionEvent actionEvent) throws IOException {
+    public void addGood() throws IOException {
         Goods currGood = (Goods) newWindow("/zadanie1/gui/resources/loadSavedGoods.fxml").getItem();
         if (currGood != null) {
             InvoiceSystem.getInstance().getCurrInvoice().addGood(currGood);
@@ -82,7 +80,7 @@ public class MainController {
 
 
     @FXML
-    public void deleteGood(ActionEvent actionEvent) {
+    public void deleteGood() {
         InvoiceSystem.getInstance().getCurrInvoice().deleteGood(listOfGoods.getSelectionModel().getSelectedItem());
         listOfGoods.getItems().clear();
         listOfGoods.getItems().addAll(InvoiceSystem.getInstance().getCurrInvoice().getListOfGoods());
@@ -90,7 +88,7 @@ public class MainController {
     }
 
     @FXML
-    public void loadInvoice(ActionEvent actionEvent) throws IOException {
+    public void loadInvoice() throws IOException {
         Invoice currInvoice = (Invoice) newWindow("/zadanie1/gui/resources/loadSavedInvoices.fxml").getItem();
         if (currInvoice != null) {
             InvoiceSystem.getInstance().setNewInvoice();
@@ -107,7 +105,7 @@ public class MainController {
     }
 
     @FXML
-    public void saveInvoice(ActionEvent actionEvent) throws IOException {
+    public void saveInvoice() {
         if (name.getText().length() == 0 || address.getText().length() == 0 || town.getText().length() == 0 || postal_code.getText().length() == 0 || number.getText().length() == 0) {
             warningCustomer.setText("Vyplň všetky polia!");
             return;

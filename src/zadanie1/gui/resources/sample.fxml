@@ -11,75 +11,88 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="800.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zadanie1.gui.controllers.MainController">
-  <content>
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="598.0" style="-fx-background-color: #99D9EA;">
-         <children>
-            <Label layoutX="92.0" layoutY="34.0" text="Fakturačný systém" textFill="WHITE">
-               <font>
-                  <Font name="Constantia Bold" size="47.0" />
-               </font>
-            </Label>
-            <Label layoutX="62.0" layoutY="127.0" text="Zákazník">
-               <font>
-                  <Font name="Constantia" size="15.0" />
-               </font>
-            </Label>
-            <Line endX="100.0" layoutX="163.0" layoutY="146.0" startX="-100.0" />
-            <Label layoutX="67.0" layoutY="163.0" text="Meno a priezvisko:  *" />
-            <Label layoutX="68.0" layoutY="195.0" text="Adresa: *" />
-            <Label layoutX="391.0" layoutY="195.0" text="Číslo: *" />
-            <Label layoutX="70.0" layoutY="230.0" text="Mesto: *" />
-            <Label layoutX="391.0" layoutY="230.0" text="PSČ: *" />
-            <TextField fx:id="name" layoutX="197.0" layoutY="158.0" prefHeight="26.0" prefWidth="336.0" promptText="Zadaj meno a priezvisko ..." />
-            <TextField fx:id="address" layoutX="135.0" layoutY="191.0" prefHeight="26.0" prefWidth="247.0" promptText="Zadaj adresu ..." />
-            <TextField fx:id="town" layoutX="136.0" layoutY="226.0" prefHeight="26.0" prefWidth="246.0" promptText="Zadaj mesto ..." />
-            <TextField fx:id="number" layoutX="431.0" layoutY="191.0" prefHeight="26.0" prefWidth="102.0" promptText="Popisné č." />
-            <TextField fx:id="postal_code" layoutX="431.0" layoutY="226.0" prefHeight="26.0" prefWidth="102.0" promptText="PSČ ..." />
-            <Button layoutX="311.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#saveCustomer" prefHeight="32.0" prefWidth="108.0" text="Ulož zákazníka" />
-            <Button layoutX="428.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#loadCustomer" prefHeight="32.0" prefWidth="108.0" text="Načítaj zákazníka" />
-            <Label fx:id="warningCustomer" layoutX="376.0" layoutY="306.0" prefHeight="18.0" prefWidth="160.0" textFill="RED" />
-            <Label layoutX="62.0" layoutY="324.0" text="Tovary">
-               <font>
-                  <Font name="Constantia" size="15.0" />
-               </font>
-            </Label>
-            <Line endX="100.0" layoutX="163.0" layoutY="343.0" startX="-100.0" />
-            <Button layoutX="311.0" layoutY="489.0" minWidth="50.0" mnemonicParsing="false" onAction="#addGood" prefHeight="32.0" prefWidth="109.0" text="Pridaj tovar" />
-            <Button layoutX="428.0" layoutY="489.0" minWidth="50.0" mnemonicParsing="false" onAction="#deleteGood" prefHeight="32.0" prefWidth="108.0" text="Zmaž tovar" />
-            <Label layoutX="62.0" layoutY="535.0" text="Faktúra">
-               <font>
-                  <Font name="Constantia" size="15.0" />
-               </font>
-            </Label>
-            <Line endX="100.0" layoutX="163.0" layoutY="554.0" startX="-100.0" />
-            <Label layoutX="69.0" layoutY="565.0" text="Spolu:">
-               <font>
-                  <Font name="Constantia" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="totalCount" layoutX="186.0" layoutY="565.0" prefHeight="27.0" prefWidth="347.0">
-               <font>
-                  <Font name="Constantia" size="22.0" />
-               </font>
-            </Label>
-            <Button layoutX="311.0" layoutY="653.0" minWidth="50.0" mnemonicParsing="false" onAction="#saveInvoice" prefHeight="32.0" prefWidth="109.0" text="Ulož faktúru" />
-            <Button layoutX="428.0" layoutY="653.0" minWidth="50.0" mnemonicParsing="false" onAction="#loadInvoice" prefHeight="32.0" prefWidth="109.0" text="Načítaj faktúru" />
-            <TableView fx:id="listOfGoods" layoutX="63.0" layoutY="351.0" prefHeight="127.0" prefWidth="477.0">
-               <columns>
-                  <TableColumn fx:id="columnName" editable="false" prefWidth="86.0" text="Názov" />
-                  <TableColumn fx:id="columnDescription" editable="false" prefWidth="287.0" text="Popis" />
-                  <TableColumn fx:id="columnValue" editable="false" prefWidth="59.0" text="Cena v € " />
-                  <TableColumn fx:id="columnCount" editable="false" prefWidth="44.0" text="Počet" />
-               </columns></TableView>
-            <Label layoutX="69.0" layoutY="598.0" text="Vytvorená:">
-               <font>
-                  <Font name="Constantia" size="22.0" />
-               </font>
-            </Label>
-            <DatePicker fx:id="calendar" layoutX="186.0" layoutY="599.0" />
-            <Label fx:id="warningGoods" layoutX="376.0" layoutY="526.0" prefHeight="18.0" prefWidth="160.0" textFill="RED" />
-            <Label fx:id="warningDate" layoutX="316.0" layoutY="693.0" prefHeight="18.0" prefWidth="220.0" textFill="RED" />
-         </children></AnchorPane>
-  </content>
+<ScrollPane maxHeight="800.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="zadanie1.gui.controllers.MainController">
+   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="798.0"
+               prefWidth="598.0" style="-fx-background-color: #99D9EA;">
+      <Label layoutX="92.0" layoutY="34.0" text="Fakturačný systém" textFill="WHITE">
+         <font>
+            <Font name="Constantia Bold" size="47.0"/>
+         </font>
+      </Label>
+      <Label layoutX="62.0" layoutY="127.0" text="Zákazník">
+         <font>
+            <Font name="Constantia" size="15.0"/>
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="163.0" layoutY="146.0" startX="-100.0"/>
+      <Label layoutX="67.0" layoutY="163.0" text="Meno a priezvisko:  *"/>
+      <Label layoutX="68.0" layoutY="195.0" text="Adresa: *"/>
+      <Label layoutX="391.0" layoutY="195.0" text="Číslo: *"/>
+      <Label layoutX="70.0" layoutY="230.0" text="Mesto: *"/>
+      <Label layoutX="391.0" layoutY="230.0" text="PSČ: *"/>
+      <TextField fx:id="name" layoutX="197.0" layoutY="158.0" prefHeight="26.0" prefWidth="336.0"
+                 promptText="Zadaj meno a priezvisko ..."/>
+      <TextField fx:id="address" layoutX="135.0" layoutY="191.0" prefHeight="26.0" prefWidth="247.0"
+                 promptText="Zadaj adresu ..."/>
+      <TextField fx:id="town" layoutX="136.0" layoutY="226.0" prefHeight="26.0" prefWidth="246.0"
+                 promptText="Zadaj mesto ..."/>
+      <TextField fx:id="number" layoutX="431.0" layoutY="191.0" prefHeight="26.0" prefWidth="102.0"
+                 promptText="Popisné č."/>
+      <TextField fx:id="postal_code" layoutX="431.0" layoutY="226.0" prefHeight="26.0" prefWidth="102.0"
+                 promptText="PSČ ..."/>
+      <Button layoutX="311.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#saveCustomer"
+              prefHeight="32.0" prefWidth="108.0" text="Ulož zákazníka"/>
+      <Button layoutX="428.0" layoutY="265.0" minWidth="50.0" mnemonicParsing="false" onAction="#loadCustomer"
+              prefHeight="32.0" prefWidth="108.0" text="Načítaj zákazníka"/>
+      <Label fx:id="warningCustomer" layoutX="376.0" layoutY="306.0" prefHeight="18.0" prefWidth="160.0"
+             textFill="RED"/>
+      <Label layoutX="62.0" layoutY="324.0" text="Tovary">
+         <font>
+            <Font name="Constantia" size="15.0"/>
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="163.0" layoutY="343.0" startX="-100.0"/>
+      <Button layoutX="311.0" layoutY="489.0" minWidth="50.0" mnemonicParsing="false" onAction="#addGood"
+              prefHeight="32.0" prefWidth="109.0" text="Pridaj tovar"/>
+      <Button layoutX="428.0" layoutY="489.0" minWidth="50.0" mnemonicParsing="false" onAction="#deleteGood"
+              prefHeight="32.0" prefWidth="108.0" text="Zmaž tovar"/>
+      <Label layoutX="62.0" layoutY="535.0" text="Faktúra">
+         <font>
+            <Font name="Constantia" size="15.0"/>
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="163.0" layoutY="554.0" startX="-100.0"/>
+      <Label layoutX="69.0" layoutY="565.0" text="Spolu:">
+         <font>
+            <Font name="Constantia" size="22.0"/>
+         </font>
+      </Label>
+      <Label fx:id="totalCount" layoutX="186.0" layoutY="565.0" prefHeight="27.0" prefWidth="347.0">
+         <font>
+            <Font name="Constantia" size="22.0"/>
+         </font>
+      </Label>
+      <Button layoutX="311.0" layoutY="653.0" minWidth="50.0" mnemonicParsing="false" onAction="#saveInvoice"
+              prefHeight="32.0" prefWidth="109.0" text="Ulož faktúru"/>
+      <Button layoutX="428.0" layoutY="653.0" minWidth="50.0" mnemonicParsing="false" onAction="#loadInvoice"
+              prefHeight="32.0" prefWidth="109.0" text="Načítaj faktúru"/>
+      <TableView fx:id="listOfGoods" layoutX="63.0" layoutY="351.0" prefHeight="127.0" prefWidth="477.0">
+         <columns>
+            <TableColumn fx:id="columnName" editable="false" prefWidth="86.0" text="Názov"/>
+            <TableColumn fx:id="columnDescription" editable="false" prefWidth="287.0" text="Popis"/>
+            <TableColumn fx:id="columnValue" editable="false" prefWidth="59.0" text="Cena v € "/>
+            <TableColumn fx:id="columnCount" editable="false" prefWidth="44.0" text="Počet"/>
+         </columns>
+      </TableView>
+      <Label layoutX="69.0" layoutY="598.0" text="Vytvorená:">
+         <font>
+            <Font name="Constantia" size="22.0"/>
+         </font>
+      </Label>
+      <DatePicker fx:id="calendar" layoutX="186.0" layoutY="599.0"/>
+      <Label fx:id="warningGoods" layoutX="376.0" layoutY="526.0" prefHeight="18.0" prefWidth="160.0" textFill="RED"/>
+      <Label fx:id="warningDate" layoutX="316.0" layoutY="693.0" prefHeight="18.0" prefWidth="220.0" textFill="RED"/>
+   </AnchorPane>
 </ScrollPane>

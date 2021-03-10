@@ -6,9 +6,9 @@ import java.util.List;
 public final class InvoiceSystem {
     private static final InvoiceSystem INSTANCE = new InvoiceSystem();
 
-    private List<Customer> listOfCustomers = new ArrayList<>();
-    private List<Goods> listOfGoods = new ArrayList<>();
-    private List<Invoice> listOfInvoice = new ArrayList<>();
+    private final List<Customer> listOfCustomers = new ArrayList<>();
+    private final List<Goods> listOfGoods = new ArrayList<>();
+    private final List<Invoice> listOfInvoice = new ArrayList<>();
     private Invoice currInvoice = new Invoice();
 
     private InvoiceSystem() {}

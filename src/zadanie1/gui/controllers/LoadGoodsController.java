@@ -3,7 +3,6 @@ package zadanie1.gui.controllers;
 import zadanie1.app.Goods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,20 +63,20 @@ public class LoadGoodsController extends LoadController{
     }
 
     @FXML
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void useItem(ActionEvent actionEvent) {
+    public void useItem() {
         chosedItem = tableOfGoods.getSelectionModel().getSelectedItem();
         Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void addItem(ActionEvent actionEvent) {
+    public void addItem() {
         try {
             double val = Double.parseDouble(value.getText());
             if (name.getText().length() != 0 && text.getText().length() != 0 && value.getText().length()  != 0) {
