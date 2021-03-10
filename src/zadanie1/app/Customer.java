@@ -1,12 +1,13 @@
 package zadanie1.app;
 
-public class Customer {
-    private String name = null;
-    private String address = null;
-    private String number = null;
-    private String town = null;
-    private String postal_code = null;
+public class Customer implements ItemForChoice{
+    private String name;
+    private String address;
+    private String number;
+    private String town;
+    private String postal_code;
 
+    //region Constructors
     public Customer(String name, String address, String number, String town, String postal_code) {
         this.name = name;
         this.address = address;
@@ -15,6 +16,16 @@ public class Customer {
         this.postal_code = postal_code;
     }
 
+    public Customer() {
+        this.name = null;
+        this.address = null;
+        this.number = null;
+        this.town = null;
+        this.postal_code = null;
+    }
+    //endregion
+
+    //region Getters and Setters
     public String getAddress() {
         return address;
     }
@@ -54,4 +65,5 @@ public class Customer {
     public void setPostal_code(String postal_code) {
         this.postal_code = postal_code;
     }
+    //endregion
 }

@@ -1,6 +1,7 @@
 package zadanie1.gui.controllers;
 
 import zadanie1.app.Invoice;
+import zadanie1.app.InvoiceSystem;
 import zadanie1.app.ViewInList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,11 +9,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-public class LoadInvoiceController extends SampleController {
+public class LoadInvoiceController extends LoadController{
     @FXML
     private ListView<ViewInList> listOfItems;
-
-    private Invoice chosedItem = null;
 
     @FXML
     public void initialize() {
@@ -29,7 +28,7 @@ public class LoadInvoiceController extends SampleController {
         });
 
         listOfItems.getItems().clear();
-        listOfItems.getItems().addAll(localSys.getListOfInvoice());
+        listOfItems.getItems().addAll(InvoiceSystem.getInstance().getListOfInvoice());
     }
 
     @FXML
@@ -44,9 +43,4 @@ public class LoadInvoiceController extends SampleController {
         Stage stage = (Stage) listOfItems.getScene().getWindow();
         stage.close();
     }
-
-    public  Invoice getItem() {
-        return chosedItem;
-    }
-
 }

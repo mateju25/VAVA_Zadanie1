@@ -8,12 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import zadanie1.app.InvoiceSystem;
 
 
-public class LoadGoodsController extends SampleController {
+public class LoadGoodsController extends LoadController{
     @FXML
     private TableView<Goods> tableOfGoods;
     @FXML
@@ -31,8 +31,6 @@ public class LoadGoodsController extends SampleController {
     @FXML
     private TableColumn<Goods, Double> columnValue;
 
-    private Goods chosedItem = null;
-
     @FXML
     public void initialize() {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -44,16 +42,23 @@ public class LoadGoodsController extends SampleController {
         columnValue.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
             @Override
             public String toString(Double object) {
-                return String.valueOf(object);
+                try {
+                    return String.valueOf(object);
+                } catch (NumberFormatException a) {
+                    return "";
+                }
             }
 
             @Override
             public Double fromString(String string) {
-                return Double.parseDouble(string);
+                try {
+                    return Double.parseDouble(string);
+                } catch (NumberFormatException a) {
+                    Goods item = tableOfGoods.getSelectionModel().getSelectedItem();
+                    return item.getValue();
+                }
             }
         }));
-
-        warning.setTextFill(Color.color(1, 0, 0));
         tableOfGoods.getItems().clear();
         tableOfGoods.getItems().addAll(getGoods());
     }
@@ -76,8 +81,9 @@ public class LoadGoodsController extends SampleController {
         try {
             double val = Double.parseDouble(value.getText());
             if (name.getText().length() != 0 && text.getText().length() != 0 && value.getText().length()  != 0) {
+                warning.setText("");
                 Goods temp = new Goods(name.getText(), text.getText(), val);
-                localSys.getListOfGoods().add(temp);
+                InvoiceSystem.getInstance().getListOfGoods().add(temp);
                 tableOfGoods.getItems().clear();
                 tableOfGoods.getItems().addAll(getGoods());
             } else {
@@ -107,13 +113,9 @@ public class LoadGoodsController extends SampleController {
         editGood.setValue(cellEditEvent.getNewValue());
     }
 
-    public Goods getItem() {
-        return chosedItem;
-    }
-
     private ObservableList<Goods> getGoods() {
         ObservableList<Goods> items = FXCollections.observableArrayList();
-        items.addAll(localSys.getListOfGoods());
+        items.addAll(InvoiceSystem.getInstance().getListOfGoods());
         return items;
     }
 }

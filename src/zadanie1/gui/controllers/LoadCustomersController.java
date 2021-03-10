@@ -10,8 +10,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import zadanie1.app.InvoiceSystem;
 
-public class LoadCustomersController extends SampleController {
+public class LoadCustomersController extends LoadController{
     @FXML
     private TableView<Customer> tableOfGoods;
     @FXML
@@ -24,8 +25,6 @@ public class LoadCustomersController extends SampleController {
     private TableColumn<Customer, String> columnTown;
     @FXML
     private TableColumn<Customer, String> columnPostalCode;
-
-    private Customer chosedItem = null;
 
     @FXML
     public void initialize() {
@@ -87,13 +86,9 @@ public class LoadCustomersController extends SampleController {
         edit.setPostal_code(cellEditEvent.getNewValue());
     }
 
-    public Customer getItem() {
-        return chosedItem;
-    }
-
     private ObservableList<Customer> getGoods() {
         ObservableList<Customer> items = FXCollections.observableArrayList();
-        items.addAll(localSys.getListOfCustomers());
+        items.addAll(InvoiceSystem.getInstance().getListOfCustomers());
         return items;
     }
 

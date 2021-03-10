@@ -1,9 +1,9 @@
 package zadanie1.app;
 
-public class Goods implements Cloneable {
-    private String name = "";
-    private String description = "";
-    private double value = 0;
+public class Goods implements ItemForChoice {
+    private String name;
+    private String description;
+    private double value;
 
     public Goods(String name, String description, double value) {
         this.name = name;
@@ -11,6 +11,7 @@ public class Goods implements Cloneable {
         this.value = value;
     }
 
+    //region Getters and Setters
     public String getName() {
         return name;
     }
@@ -34,8 +35,6 @@ public class Goods implements Cloneable {
     public void setValue(double value) {
         this.value = value;
     }
+    //endregion
 
-    public Object clone()throws CloneNotSupportedException{
-        return super.clone();
-    }
 }

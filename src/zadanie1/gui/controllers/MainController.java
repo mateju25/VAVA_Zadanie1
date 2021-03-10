@@ -1,5 +1,7 @@
 package zadanie1.gui.controllers;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.stage.Modality;
 import zadanie1.app.Customer;
 import zadanie1.app.Goods;
 import zadanie1.app.Invoice;
@@ -17,204 +19,195 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Optional;
 
-public class MainController extends SampleController {
-    @FXML
-    public Label createdLabel;
-    @FXML
-    private TableView<Invoice.GoodsAndCount> listOfGoods;
-    @FXML
-    private Label warning;
-    @FXML
-    private Label totalCount;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField address;
-    @FXML
-    private TextField town;
-    @FXML
-    private TextField postal_code;
-    @FXML
-    private TextField number;
-    @FXML
-    private TableColumn<Invoice.GoodsAndCount, String> columnName;
-    @FXML
-    private TableColumn<Invoice.GoodsAndCount, String> columnDescription;
-    @FXML
-    private TableColumn<Invoice.GoodsAndCount, Double> columnValue;
-    @FXML
-    private TableColumn<Invoice.GoodsAndCount, Integer> columnCount;
+public class MainController {
+    @FXML private  DatePicker calendar;
+    @FXML private TableView<Invoice.GoodsAndCount> listOfGoods;
+    @FXML private Label warningCustomer;
+    @FXML private Label warningGoods;
+    @FXML private Label warningDate;
+    @FXML private Label totalCount;
+    @FXML private TextField name;
+    @FXML private TextField address;
+    @FXML private TextField town;
+    @FXML private TextField postal_code;
+    @FXML private TextField number;
+    @FXML private TableColumn<Invoice.GoodsAndCount, String> columnName;
+    @FXML private TableColumn<Invoice.GoodsAndCount, String> columnDescription;
+    @FXML private TableColumn<Invoice.GoodsAndCount, Double> columnValue;
+    @FXML private TableColumn<Invoice.GoodsAndCount, Integer> columnCount;
 
     @FXML
     private void initialize() {
-        localSys = new InvoiceSystem();
-        warning.setTextFill(Color.color(1, 0, 0));
-        createdLabel.setText("");
+        cleanAndRefreshPage();
         totalCount.setText(String.valueOf(0));
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         columnValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         columnCount.setCellValueFactory(new PropertyValueFactory<>("count"));
-        columnCount.setResizable(false);
-
-        listOfGoods.getItems().clear();
-        listOfGoods.getItems().addAll(getGoods());
     }
 
     @FXML
     private void saveCustomer(ActionEvent event)
     {
         if (name.getText().length() != 0 && address.getText().length() != 0 && town.getText().length() != 0 && postal_code.getText().length() != 0 && number.getText().length() != 0) {
-            warning.setText("");
-            Customer newCustomer = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
-
-            localSys.getListOfCustomers().add(newCustomer);
+            warningCustomer.setText("");
+            InvoiceSystem.getInstance().getListOfCustomers().add(new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText()));
         } else {
-            warning.setText("Vyplň všetky polia!");
+            warningCustomer.setText("Vyplň všetky polia!");
         }
     }
 
     @FXML
     private void loadCustomer(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedCustomers.fxml"));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-
-        LoadCustomersController controller = loader.getController();
-
-        Stage window = new Stage();
-        window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
-        window.setScene(scene);
-        window.showAndWait();
-
-        Customer currCust = controller.getItem();
+        Customer currCust = (Customer) newWindow("/zadanie1/gui/resources/loadSavedCustomers.fxml").getItem();
         if (currCust != null) {
-            name.setText(currCust.getName());
-            address.setText(currCust.getAddress());
-            number.setText(currCust.getNumber());
-            town.setText(currCust.getTown());
-            postal_code.setText(currCust.getPostal_code());
+            setInfoAboutCustomer(currCust);
         }
     }
 
     @FXML
     public void addGood(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedGoods.fxml"));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-
-        LoadGoodsController controller = loader.getController();
-
-        Stage window = new Stage();
-        window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
-        window.setScene(scene);
-        window.showAndWait();
-
-        Goods currGood = controller.getItem();
+        Goods currGood = (Goods) newWindow("/zadanie1/gui/resources/loadSavedGoods.fxml").getItem();
         if (currGood != null) {
-            localSys.getCurrInvoice().addGood(currGood);
+            InvoiceSystem.getInstance().getCurrInvoice().addGood(currGood);
             listOfGoods.getItems().clear();
             listOfGoods.getItems().addAll(getGoods());
-            totalCount.setText(String.valueOf(localSys.getCurrInvoice().getTotalValue()));
+            totalCount.setText(String.valueOf(InvoiceSystem.getInstance().getCurrInvoice().getTotalValue()));
         }
     }
 
 
     @FXML
     public void deleteGood(ActionEvent actionEvent) {
-        localSys.getCurrInvoice().deleteGood((Invoice.GoodsAndCount) listOfGoods.getSelectionModel().getSelectedItem());
+        InvoiceSystem.getInstance().getCurrInvoice().deleteGood(listOfGoods.getSelectionModel().getSelectedItem());
         listOfGoods.getItems().clear();
-        listOfGoods.getItems().addAll(localSys.getCurrInvoice().getListOfGoods());
-        totalCount.setText(String.valueOf(localSys.getCurrInvoice().getTotalValue()));
+        listOfGoods.getItems().addAll(InvoiceSystem.getInstance().getCurrInvoice().getListOfGoods());
+        totalCount.setText(String.valueOf(InvoiceSystem.getInstance().getCurrInvoice().getTotalValue()));
     }
 
     @FXML
     public void loadInvoice(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/zadanie1/gui/resources/loadSavedInvoices.fxml"));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-
-        LoadInvoiceController controller = loader.getController();
-
-        Stage window = new Stage();
-        window.setResizable(false);
-        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
-        window.setScene(scene);
-        window.showAndWait();
-
-        Invoice currInvoice = controller.getItem();
+        Invoice currInvoice = (Invoice) newWindow("/zadanie1/gui/resources/loadSavedInvoices.fxml").getItem();
         if (currInvoice != null) {
-            localSys.setNewInvoice();
+            InvoiceSystem.getInstance().setNewInvoice();
 
-            name.setText(currInvoice.getCustomer().getName());
-            address.setText(currInvoice.getCustomer().getAddress());
-            number.setText(currInvoice.getCustomer().getNumber());
-            town.setText(currInvoice.getCustomer().getTown());
-            postal_code.setText(currInvoice.getCustomer().getPostal_code());
+            setInfoAboutCustomer(currInvoice.getCustomer());
 
             ArrayList<Invoice.GoodsAndCount> newList = currInvoice.duplicateGoods();
-            localSys.getCurrInvoice().setListOfGoods(newList);
+            InvoiceSystem.getInstance().getCurrInvoice().setListOfGoods(newList);
             listOfGoods.getItems().clear();
             listOfGoods.getItems().addAll(getGoods());
             totalCount.setText(String.valueOf(currInvoice.getTotalValue()));
-            DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-            createdLabel.setText(currInvoice.getCreated().format(formatObj));
+            calendar.setAccessibleText(currInvoice.getCreated());
         }
     }
 
     @FXML
     public void saveInvoice(ActionEvent actionEvent) throws IOException {
-        if (name.getText().length() != 0 && address.getText().length() != 0 && town.getText().length() != 0 && postal_code.getText().length() != 0 && number.getText().length() != 0) {
-            warning.setText("");
-            Customer newCustomer = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
-            localSys.getCurrInvoice().setCustomer(newCustomer);
-
-            ArrayList<Invoice.GoodsAndCount> newList = localSys.getCurrInvoice().duplicateGoods();
-            localSys.getCurrInvoice().setListOfGoods(newList);
-
-            String saveAsName = saveAs("Zadaj meno pre uloženie faktúry:");
-            if (saveAsName != null) {
-                localSys.getCurrInvoice().setInfo(saveAsName);
-            } else {
-                localSys.getCurrInvoice().setInfo(localSys.getCurrInvoice().getCustomer().getName());
-            }
-            localSys.getCurrInvoice().setCreated(LocalDateTime.now());
-            localSys.getListOfInvoice().add(localSys.getCurrInvoice());
-
-            localSys.setNewInvoice();
-            name.setText("");
-            address.setText("");
-            number.setText("");
-            town.setText("");
-            postal_code.setText("");
-
-            listOfGoods.getItems().clear();
-            listOfGoods.getItems().addAll(getGoods());
-        } else {
-            warning.setText("Vyplň všetky polia!");
+        if (name.getText().length() == 0 || address.getText().length() == 0 || town.getText().length() == 0 || postal_code.getText().length() == 0 || number.getText().length() == 0) {
+            warningCustomer.setText("Vyplň všetky polia!");
+            return;
         }
+
+        if (listOfGoods.getItems().size() == 0) {
+            warningCustomer.setText("");
+            warningGoods.setText("Pridaj nejaký tovar!");
+            return;
+        }
+
+        if (calendar.getValue() == null) {
+            warningCustomer.setText("");
+            warningGoods.setText("");
+            warningDate.setText("Zadaj dátum vytvorenia faktúry!");
+            return;
+        }
+
+        warningCustomer.setText("");
+        warningGoods.setText("");
+        warningDate.setText("");
+        Customer newCustomer = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
+        InvoiceSystem.getInstance().getCurrInvoice().setCustomer(newCustomer);
+
+        ArrayList<Invoice.GoodsAndCount> newList = InvoiceSystem.getInstance().getCurrInvoice().duplicateGoods();
+        InvoiceSystem.getInstance().getCurrInvoice().setListOfGoods(newList);
+
+        String saveAsName = saveAs("Zadaj meno pre uloženie faktúry:");
+        if (saveAsName != null) {
+            InvoiceSystem.getInstance().getCurrInvoice().setInfo(saveAsName);
+        } else {
+            InvoiceSystem.getInstance().getCurrInvoice().setInfo(InvoiceSystem.getInstance().getCurrInvoice().getCustomer().getName());
+        }
+        InvoiceSystem.getInstance().getCurrInvoice().setCreated(calendar.getAccessibleText());
+        InvoiceSystem.getInstance().getListOfInvoice().add(InvoiceSystem.getInstance().getCurrInvoice());
+
+        cleanAndRefreshPage();
     }
 
 
     private ObservableList<Invoice.GoodsAndCount> getGoods() {
         ObservableList<Invoice.GoodsAndCount> items = FXCollections.observableArrayList();
-        items.addAll(localSys.getCurrInvoice().getListOfGoods());
+        items.addAll(InvoiceSystem.getInstance().getCurrInvoice().getListOfGoods());
         return items;
+    }
+
+    private static String saveAs(String message) {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Ulož ako...");
+        dialog.setContentText(message);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            if (result.get().length() != 0)
+                return result.get();
+        }
+        return null;
+    }
+
+    private LoadController newWindow(String path) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(path));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+
+        LoadController controller = loader.getController();
+
+        Stage window = new Stage();
+        window.setResizable(false);
+        window.setAlwaysOnTop(true);
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
+        window.setScene(scene);
+        window.showAndWait();
+        return controller;
+    }
+
+
+    private void cleanAndRefreshPage() {
+        InvoiceSystem.getInstance().setNewInvoice();
+        name.setText("");
+        address.setText("");
+        number.setText("");
+        town.setText("");
+        postal_code.setText("");
+
+        totalCount.setText("");
+        calendar.setValue(null);
+
+        listOfGoods.getItems().clear();
+        listOfGoods.getItems().addAll(getGoods());
+    }
+
+    private void setInfoAboutCustomer(Customer customer) {
+        name.setText(customer.getName());
+        address.setText(customer.getAddress());
+        number.setText(customer.getNumber());
+        town.setText(customer.getTown());
+        postal_code.setText(customer.getPostal_code());
     }
 
 }

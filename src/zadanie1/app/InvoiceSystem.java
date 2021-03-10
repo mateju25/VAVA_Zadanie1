@@ -3,17 +3,18 @@ package zadanie1.app;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceSystem {
-    private List<Customer> listOfCustomers = null;
-    private List<Goods> listOfGoods = null;
-    private List<Invoice> listOfInvoice = null;
-    private Invoice currInvoice = null;
+public final class InvoiceSystem {
+    private static final InvoiceSystem INSTANCE = new InvoiceSystem();
 
-    public InvoiceSystem() {
-        this.listOfCustomers = new ArrayList<Customer>();
-        this.listOfGoods = new ArrayList<Goods>();
-        this.listOfInvoice = new ArrayList<Invoice>();
-        this.currInvoice = new Invoice();
+    private List<Customer> listOfCustomers = new ArrayList<>();
+    private List<Goods> listOfGoods = new ArrayList<>();
+    private List<Invoice> listOfInvoice = new ArrayList<>();
+    private Invoice currInvoice = new Invoice();
+
+    private InvoiceSystem() {}
+
+    public static InvoiceSystem getInstance() {
+        return INSTANCE;
     }
 
     public Invoice getCurrInvoice() {
@@ -21,10 +22,6 @@ public class InvoiceSystem {
     }
 
     public void setNewInvoice() {this.currInvoice = new Invoice();}
-
-    public void setCurrInvoice(Invoice currInvoice) {
-        this.currInvoice = currInvoice;
-    }
 
     public List<Customer> getListOfCustomers() {
         return listOfCustomers;

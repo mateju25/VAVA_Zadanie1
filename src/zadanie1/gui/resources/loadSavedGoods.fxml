@@ -31,7 +31,7 @@
             <Font name="Constantia" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="warning" layoutX="484.0" layoutY="107.0" prefHeight="18.0" prefWidth="231.0" />
+      <Label fx:id="warning" layoutX="484.0" layoutY="107.0" prefHeight="18.0" prefWidth="231.0" textFill="RED" />
       <TableView fx:id="tableOfGoods" editable="true" layoutX="74.0" layoutY="123.0" prefHeight="383.0" prefWidth="641.0">
          <columns>
             <TableColumn fx:id="columnName" onEditCommit="#columnEditName" prefWidth="182.0" text="Názov" />
