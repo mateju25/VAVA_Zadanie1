@@ -34,4 +34,27 @@ public final class InvoiceSystem {
     public List<Invoice> getListOfInvoice() {
         return listOfInvoice;
     }
+
+    public boolean existsCustomer(Customer customer) {
+        for (Customer item: this.listOfCustomers) {
+            if (item.getName().equals(customer.getName()) &&
+                    item.getAddress().equals(customer.getAddress()) &&
+                    item.getNumber().equals(customer.getNumber()) &&
+                    item.getTown().equals(customer.getTown()) &&
+                    item.getPostal_code().equals(customer.getPostal_code()))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean existsGoods(Goods good) {
+        for (Goods item: this.listOfGoods) {
+            if (item.getName().equals(good.getName()) &&
+                    item.getDescription().equals(good.getDescription()) &&
+                    item.getValue() == good.getValue() )
+                return true;
+        }
+        return false;
+    }
+
 }

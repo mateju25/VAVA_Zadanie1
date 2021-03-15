@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import zadanie1.app.InvoiceSystem;
 
+import java.util.Optional;
+
 
 public class LoadGoodsController extends LoadController{
     @FXML
@@ -29,6 +31,8 @@ public class LoadGoodsController extends LoadController{
     private TableColumn<Goods, String> columnDescription;
     @FXML
     private TableColumn<Goods, Double> columnValue;
+
+    private int count = 1;
 
     @FXML
     public void initialize() {
@@ -71,6 +75,23 @@ public class LoadGoodsController extends LoadController{
     @FXML
     public void useItem() {
         chosedItem = tableOfGoods.getSelectionModel().getSelectedItem();
+        if (chosedItem != null) {
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Použi ako...");
+            dialog.setContentText("Vyber počet tovarov:");
+
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                if (result.get().length() != 0)
+                    try {
+                        count = Integer.parseInt(result.get());
+                        if (count <= 0)
+                            count = 1;
+                    } catch (NumberFormatException a) {
+                        count = 1;
+                    }
+            }
+        }
         Stage stage = (Stage) tableOfGoods.getScene().getWindow();
         stage.close();
     }
@@ -80,8 +101,12 @@ public class LoadGoodsController extends LoadController{
         try {
             double val = Double.parseDouble(value.getText());
             if (name.getText().length() != 0 && text.getText().length() != 0 && value.getText().length()  != 0) {
-                warning.setText("");
                 Goods temp = new Goods(name.getText(), text.getText(), val);
+                if (InvoiceSystem.getInstance().existsGoods(temp)) {
+                    warning.setText("Takýto tovar už existuje!");
+                    return;
+                }
+                warning.setText("");
                 InvoiceSystem.getInstance().getListOfGoods().add(temp);
                 tableOfGoods.getItems().clear();
                 tableOfGoods.getItems().addAll(getGoods());
@@ -116,5 +141,9 @@ public class LoadGoodsController extends LoadController{
         ObservableList<Goods> items = FXCollections.observableArrayList();
         items.addAll(InvoiceSystem.getInstance().getListOfGoods());
         return items;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

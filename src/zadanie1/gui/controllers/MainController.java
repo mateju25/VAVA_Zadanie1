@@ -1,5 +1,6 @@
 package zadanie1.gui.controllers;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.Modality;
 import zadanie1.app.Customer;
 import zadanie1.app.Goods;
@@ -17,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -52,8 +55,13 @@ public class MainController {
     private void saveCustomer(ActionEvent event)
     {
         if (name.getText().length() != 0 && address.getText().length() != 0 && town.getText().length() != 0 && postal_code.getText().length() != 0 && number.getText().length() != 0) {
+            Customer newCust = new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText());
+            if (InvoiceSystem.getInstance().existsCustomer(newCust)) {
+                warningCustomer.setText("Takýto zákazník už existuje!");
+                return;
+            }
             warningCustomer.setText("");
-            InvoiceSystem.getInstance().getListOfCustomers().add(new Customer(name.getText(), address.getText(), number.getText(), town.getText(), postal_code.getText()));
+            InvoiceSystem.getInstance().getListOfCustomers().add(newCust);
         } else {
             warningCustomer.setText("Vyplň všetky polia!");
         }
@@ -61,6 +69,7 @@ public class MainController {
 
     @FXML
     private void loadCustomer(ActionEvent event) throws IOException {
+        warningCustomer.setText("");
         Customer currCust = (Customer) newWindow("/zadanie1/gui/resources/loadSavedCustomers.fxml").getItem();
         if (currCust != null) {
             setInfoAboutCustomer(currCust);
@@ -69,9 +78,10 @@ public class MainController {
 
     @FXML
     public void addGood() throws IOException {
-        Goods currGood = (Goods) newWindow("/zadanie1/gui/resources/loadSavedGoods.fxml").getItem();
+        LoadGoodsController controller = (LoadGoodsController) newWindow("/zadanie1/gui/resources/loadSavedGoods.fxml");
+        Goods currGood = (Goods) controller.getItem();
         if (currGood != null) {
-            InvoiceSystem.getInstance().getCurrInvoice().addGood(currGood);
+            InvoiceSystem.getInstance().getCurrInvoice().addGood(currGood, controller.getCount());
             listOfGoods.getItems().clear();
             listOfGoods.getItems().addAll(getGoods());
             totalCount.setText(String.valueOf(InvoiceSystem.getInstance().getCurrInvoice().getTotalValue()));
@@ -100,7 +110,8 @@ public class MainController {
             listOfGoods.getItems().clear();
             listOfGoods.getItems().addAll(getGoods());
             totalCount.setText(String.valueOf(currInvoice.getTotalValue()));
-            calendar.setAccessibleText(currInvoice.getCreated());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            calendar.setValue(LocalDate.parse(currInvoice.getCreated(), formatter));
         }
     }
 
@@ -139,7 +150,7 @@ public class MainController {
         } else {
             InvoiceSystem.getInstance().getCurrInvoice().setInfo(InvoiceSystem.getInstance().getCurrInvoice().getCustomer().getName());
         }
-        InvoiceSystem.getInstance().getCurrInvoice().setCreated(calendar.getAccessibleText());
+        InvoiceSystem.getInstance().getCurrInvoice().setCreated(calendar.getValue().toString());
         InvoiceSystem.getInstance().getListOfInvoice().add(InvoiceSystem.getInstance().getCurrInvoice());
 
         cleanAndRefreshPage();
@@ -176,7 +187,8 @@ public class MainController {
 
         Stage window = new Stage();
         window.setResizable(false);
-        window.setAlwaysOnTop(true);
+        if (!(controller instanceof LoadGoodsController))
+            window.setAlwaysOnTop(true);
         window.initModality(Modality.APPLICATION_MODAL);
         window.getIcons().add(new Image(getClass().getResourceAsStream("/zadanie1/gui/resources/Ikona.png")));
         window.setScene(scene);

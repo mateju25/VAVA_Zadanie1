@@ -50,16 +50,16 @@ public class Invoice extends ViewInList implements ItemForChoice {
         this.listOfGoods = newList;
     }
 
-    public void addGood(Goods newGood) {
+    public void addGood(Goods newGood, int count) {
         for (GoodsAndCount good: listOfGoods) {
             if (good.getName().equals(newGood.getName())
                     && good.getDescription().equals(newGood.getDescription())
                     && String.valueOf(good.getValue()).equals(String.valueOf(newGood.getValue()))) {
-                good.setCount(good.getCount()+1);
+                good.setCount(good.getCount()+count);
                 return;
             }
         }
-        listOfGoods.add(new GoodsAndCount(newGood.getName(), newGood.getDescription(), newGood.getValue(), 1));
+        listOfGoods.add(new GoodsAndCount(newGood.getName(), newGood.getDescription(), newGood.getValue(), count));
     }
 
     public void deleteGood(GoodsAndCount newGood) {
